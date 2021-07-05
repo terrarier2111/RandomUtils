@@ -21,10 +21,11 @@ public final class GraphUtil {
                                                boolean printNumberHelp) {
         final int[] peak = peak(dataPoints);
         y = Math.min(y, peak[0]);
+        x = Math.min(x, dataPoints.length);
         final int columns = Math.max(dataPoints.length / x, 1);
         final char[][][] graph = new char[columns][][]; // columns(parts in which the graph was split) | x rows | y rows
         for (int i = 0; i < graph.length; i++) {
-            graph[i] = new char[Math.min(x, dataPoints.length)][];
+            graph[i] = new char[x][];
             for (int j = 0; j < graph[i].length; j++) {
                 graph[i][j] = new char[y];
             }

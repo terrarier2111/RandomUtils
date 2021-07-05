@@ -1,11 +1,10 @@
-// import de.terrarier.test.algorithms.sort.BubbleSort;
-
 public class GraphUtil {
 
     private static final char BOX_FILLED_CHAR = '▇';
     private static final char BOX_EMPTY_CHAR = '░';
     private static final char EMPTY_CHAR = ' ';
 
+    // example
     public static void main(String[] args) {
         final int[] input = new int[]{15, 13, 12, 12, 10, 9, 7, 4, 2, 0};
         // BubbleSort.sort(input); // used to reverse the input
@@ -14,7 +13,7 @@ public class GraphUtil {
 
     // TODO: Fix that when you try to build a graph, the last entry from data points will be dropped for some reason
     // Note: This method can only generate horizontal, descending graphs
-    private static String buildScaledGraphHoriz(int x, int y, int[] dataPoints) {
+    public static String buildScaledGraphHoriz(int x, int y, int[] dataPoints) {
         final int columns = Math.max(dataPoints.length / x, 1);
         final char[][][] graph = new char[columns][][]; // columns | y lines | individual chars
         for (int i = 0; i < graph.length; i++) {
@@ -53,14 +52,8 @@ public class GraphUtil {
         return sb.toString();
     }
 
-    private static void insertEntryToGraph(char[][] graph, int offset, int yCharsFilled, int yCharsEmptied) {
-        for (int i = graph[0].length - 1; i > -1; i--) {
-            graph[offset][i] = (i >= yCharsFilled ? (i - yCharsFilled >= yCharsEmptied ? EMPTY_CHAR : BOX_EMPTY_CHAR) : BOX_FILLED_CHAR);
-        }
-    }
-
     // Note: This method can only generate vertical graphs
-    private static String buildScaledGraphVert(int x, int y, int[] dataPoints, GraphDifferenceVisualizationMode mode,
+    public static String buildScaledGraphVert(int x, int y, int[] dataPoints, GraphDifferenceVisualizationMode mode,
                                                boolean printNumberHelp) {
         final int[] peak = peak(dataPoints);
         final int columns = Math.max(dataPoints.length / x, 1);
@@ -106,6 +99,12 @@ public class GraphUtil {
         }
         return sb.toString();
     }
+    
+    private static void insertEntryToGraph(char[][] graph, int offset, int yCharsFilled, int yCharsEmptied) {
+        for (int i = graph[0].length - 1; i > -1; i--) {
+            graph[offset][i] = (i >= yCharsFilled ? (i - yCharsFilled >= yCharsEmptied ? EMPTY_CHAR : BOX_EMPTY_CHAR) : BOX_FILLED_CHAR);
+        }
+    }
 
     private static int[] peak(int[] nums) {
         int biggestIdx = -1;
@@ -129,12 +128,6 @@ public class GraphUtil {
             default:
                 return 0;
         }
-    }
-
-    private enum GraphDifferenceVisualizationMode {
-
-        DECAY, INCREASE, NONE
-
     }
 
 }

@@ -3,6 +3,7 @@ package de.terrarier.randomutils.graph;
 public final class GraphUtil {
 
     private static final char BOX_FILLED_CHAR = '▇';
+    private static final char BOX_HALF_FILLED_CHAR = '▃';
     private static final char BOX_EMPTY_CHAR = '░';
     private static final char EMPTY_CHAR = ' ';
 
@@ -40,6 +41,12 @@ public final class GraphUtil {
             final int yRows = (int) (dataPoint / scale);
             final int diff = diff(lastYRows, i == dataPoints.length - 1 ? yRows : dataPoints[i + 1], yRows, visualizationMode);
             insertEntryToGraph(graph[row], subIndex, yRows, diff);
+            //
+            final boolean halfYRow = dataPoint - ((double) yRows * scale) >= scale / 2;
+            if(visualizationMode == GraphDifferenceVisualizationMode.NONE && halfYRow) {
+                graph[row][subIndex][yRows] = BOX_HALF_FILLED_CHAR;
+            }
+            //
             lastYRows = yRows;
         }
         final StringBuilder sb = new StringBuilder();

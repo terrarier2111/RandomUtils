@@ -116,7 +116,7 @@ public final class GraphUtil {
         int biggest = Integer.MIN_VALUE;
         for(int i = 0; i < nums.length; i++) {
             final int curr = nums[i];
-            if(curr > biggest) {
+            if(curr >= biggest) {
                 biggest = curr;
                 biggestIdx = i;
             }

@@ -5,7 +5,7 @@ public final class GraphBuilder {
   private int x = 20;
   private int y = 20;
   private int[] dataPoints;
-  private GraphVisualizationMode visualizationMode;
+  private GraphDifferenceVisualizationMode visualizationMode;
   private boolean printNumberHelp;
   
   public GraphBuilder x(int x) {
@@ -23,7 +23,7 @@ public final class GraphBuilder {
     return this;
   }
   
-  public GraphBuilder visualizationMode(GraphVisualizationMode visualizationMode) {
+  public GraphBuilder visualizationMode(GraphDifferenceVisualizationMode visualizationMode) {
     this.visualizationMode = visualizationMode;
     return this;
   }

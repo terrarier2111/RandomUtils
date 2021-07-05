@@ -1,6 +1,6 @@
 // import de.terrarier.test.algorithms.sort.BubbleSort;
 
-public class GraphBuilder {
+public class GraphUtil {
 
     private static final char BOX_FILLED_CHAR = '▇';
     private static final char BOX_EMPTY_CHAR = '░';

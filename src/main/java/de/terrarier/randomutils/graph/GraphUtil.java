@@ -1,4 +1,6 @@
-public class GraphUtil {
+package de.terrarier.randomutils.graph;
+
+public final class GraphUtil {
 
     private static final char BOX_FILLED_CHAR = '▇';
     private static final char BOX_EMPTY_CHAR = '░';

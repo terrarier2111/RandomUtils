@@ -1,3 +1,5 @@
+package de.terrarier.randomutils.graph;
+
 public final class GraphBuilder {
   
   private int x = 20;

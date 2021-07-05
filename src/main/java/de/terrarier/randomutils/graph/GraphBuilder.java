@@ -4,6 +4,7 @@ public final class GraphBuilder {
   private int y = 20;
   private int[] dataPoints;
   private GraphVisualizationMode visualizationMode;
+  private boolean printNumberHelp;
   
   public GraphBuilder x(int x) {
     this.x = x;
@@ -25,8 +26,13 @@ public final class GraphBuilder {
     return this;
   }
   
+  public GraphBuilder printNumberHelp(boolean printNumberHelp) {
+    this.printNumberHelp = printNumberHelp;
+    return this;
+  }
+  
   public String build() {
-   return null; 
+   return GraphUtil.buildScaledGraphVert(x, y, dataPoints, visualizationMode, printNumberHelp); 
   }
   
 }

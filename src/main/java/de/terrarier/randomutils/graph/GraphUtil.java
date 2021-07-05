@@ -11,9 +11,9 @@ public final class GraphUtil {
     public static void main(String[] args) {
         final int[] input = new int[]{15, 13, 12, 12, 10, 9, 7, 4, 2, 0};
         // BubbleSort.sort(input); // used to reverse the input
-        System.out.println(buildScaledGraphVert(20, 10, input, GraphDifferenceVisualizationMode.INCREASE, true));
+        // System.out.println(buildScaledGraphVert(20, 10, input, GraphDifferenceVisualizationMode.DECAY, true));
         System.out.println(new GraphBuilder().x(20).y(10).dataPoints(input)
-                           .visualizationMode(GraphDifferenceVisualizationMode.DECAY)
+                           .visualizationMode(GraphDifferenceVisualizationMode.NONE)
                            .printNumberHelp(true).build());
     }
     
@@ -41,12 +41,12 @@ public final class GraphUtil {
             final int yRows = (int) (dataPoint / scale);
             final int diff = diff(lastYRows, i == dataPoints.length - 1 ? yRows : dataPoints[i + 1], yRows, visualizationMode);
             insertEntryToGraph(graph[row], subIndex, yRows, diff);
-            //
+            // Add half block char (if required)
             final boolean halfYRow = dataPoint - ((double) yRows * scale) >= scale / 2;
             if(visualizationMode == GraphDifferenceVisualizationMode.NONE && halfYRow) {
                 graph[row][subIndex][yRows] = BOX_HALF_FILLED_CHAR;
             }
-            //
+
             lastYRows = yRows;
         }
         final StringBuilder sb = new StringBuilder();
@@ -68,47 +68,6 @@ public final class GraphUtil {
                     sb.append(yRow[yRow.length - 1 - l]);
                 }
                 sb.append('\n');
-            }
-        }
-        return sb.toString();
-    }
-
-    // TODO: Fix that when you try to build a graph, the last entry from data points will be dropped for some reason
-    // Note: This method can only generate horizontal, descending graphs
-    public static String buildScaledGraphHoriz(int x, int y, int[] dataPoints) {
-        final int columns = Math.max(dataPoints.length / x, 1);
-        final char[][][] graph = new char[columns][][]; // columns | y lines | individual chars
-        for (int i = 0; i < graph.length; i++) {
-            graph[i] = new char[Math.min(x, dataPoints.length)][];
-            for (int j = 0; j < graph[i].length; j++) {
-                graph[i][j] = new char[Math.min(y, dataPoints[i])];
-            }
-        }
-        // System.out.println(graph[0][0].length);
-        // System.out.println(graph[0].length);
-        final int scale = Math.max(dataPoints[0] / y, 1);
-        int lastYRows = dataPoints[0];
-        for (int i = 0; i < dataPoints.length; i++) {
-            final int row = i / x;
-            final int subIndex = i % x;
-            final int dataPoint = dataPoints[i];
-            final int yRows = dataPoint / scale;
-            final int diff = lastYRows - yRows;
-            // System.out.println("diff: " + diff);
-            insertEntryToGraph(graph[row], subIndex, yRows, diff);
-            lastYRows = yRows;
-        }
-        final StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < graph.length; i++) {
-            final char[][] row = graph[i];
-            for (int j = 0; j < row.length - 1; j++) {
-                final char[] yRow = row[j];
-                sb.append(yRow).append('\n');
-            }
-            if (i != graph.length - 1) {
-                sb.append('\n')
-                        .append('\n')
-                        .append('\n');
             }
         }
         return sb.toString();
@@ -142,6 +101,47 @@ public final class GraphUtil {
             default:
                 return 0;
         }
+    }
+    
+    // TODO: Fix that when you try to build a graph, the last entry from data points will be dropped for some reason
+    // Note: This method can only generate horizontal, descending graphs
+    public static String buildScaledGraphHoriz(int x, int y, int[] dataPoints) {
+        final int columns = Math.max(dataPoints.length / x, 1);
+        final char[][][] graph = new char[columns][][]; // columns | y lines | individual chars
+        for (int i = 0; i < graph.length; i++) {
+            graph[i] = new char[Math.min(x, dataPoints.length)][];
+            for (int j = 0; j < graph[i].length; j++) {
+                graph[i][j] = new char[Math.min(y, dataPoints[i])];
+            }
+        }
+        // System.out.println(graph[0][0].length);
+        // System.out.println(graph[0].length);
+        final int scale = Math.max(dataPoints[0] / y, 1);
+        int lastYRows = dataPoints[0];
+        for (int i = 0; i < dataPoints.length; i++) {
+            final int row = i / x;
+            final int subIndex = i % x;
+            final int dataPoint = dataPoints[i];
+            final int yRows = dataPoint / scale;
+            final int diff = lastYRows - yRows;
+            // System.out.println("diff: " + diff);
+            insertEntryToGraph(graph[row], subIndex, yRows, diff);
+            lastYRows = yRows;
+        }
+        final StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < graph.length; i++) {
+            final char[][] row = graph[i];
+            for (int j = 0; j < row.length - 1; j++) {
+                final char[] yRow = row[j];
+                sb.append(yRow).append('\n');
+            }
+            /*if (i != graph.length - 1) {
+                sb.append('\n')
+                        .append('\n')
+                        .append('\n');
+            }*/
+        }
+        return sb.toString();
     }
 
 }

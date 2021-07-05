@@ -20,12 +20,13 @@ public final class GraphUtil {
     public static String buildScaledGraphVert(int x, int y, int[] dataPoints, GraphDifferenceVisualizationMode visualizationMode,
                                                boolean printNumberHelp) {
         final int[] peak = peak(dataPoints);
+        y = Math.min(y, peak[0]);
         final int columns = Math.max(dataPoints.length / x, 1);
         final char[][][] graph = new char[columns][][]; // columns(parts in which the graph was split) | x rows | y rows
         for (int i = 0; i < graph.length; i++) {
             graph[i] = new char[Math.min(x, dataPoints.length)][];
             for (int j = 0; j < graph[i].length; j++) {
-                graph[i][j] = new char[Math.min(y, peak[0])];
+                graph[i][j] = new char[y];
             }
         }
         final double scale = Math.max((double) peak[0] / (double) y, 1);

@@ -43,7 +43,7 @@ public final class GraphUtil {
             insertEntryToGraph(graph[row], subIndex, yRows, diff);
             // Add half block char (if required)
             final boolean halfYRow = dataPoint - ((double) yRows * scale) >= scale / 2;
-            if(visualizationMode == GraphDifferenceVisualizationMode.NONE && halfYRow) {
+            if(visualizationMode == GraphDifferenceVisualizationMode.NONE && halfYRow) { // Only NONE is supported for half blocks because other settings look awkward.
                 graph[row][subIndex][yRows] = BOX_HALF_FILLED_CHAR;
             }
 
